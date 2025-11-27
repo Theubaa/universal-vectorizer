@@ -9,8 +9,8 @@ flowchart LR
     A[Client Upload / URL] --> B[Streaming Ingestion Service]
     B --> C[Preprocessor (OCR/Parsing)]
     C --> D[Streaming Hybrid Chunker]
-    D --> E[Batched Async Embeddings\nOpenAI + HF fallback]
-    E --> F[Vector DB Abstraction\nChroma / Pinecone / Qdrant]
+    D --> E[Batched Async Embeddings<br/>OpenAI + HF fallback]
+    E --> F[Vector DB Abstraction<br/>Chroma / Pinecone / Qdrant]
     F --> G[Semantic Search API + UI]
 ```
 
