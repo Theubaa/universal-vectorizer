@@ -1,7 +1,25 @@
 # Universal Vectorizer
 
+> Enterprise-grade **RAG ingestion engine** for **LLM pipelines**, **vector databases**, **observability-rich streaming ETL**, and **multimodal document intelligence**. Optimized for people searching GitHub or Google for “universal vectorizer”, “LLM data ingestion”, “RAG pipeline”, “OpenAI embeddings streaming”, “HuggingFace vector store”, “Pinecone + Chroma + Qdrant”, or “50GB PDF OCR pipeline”.
+
 ## What this system is (and who it serves)
 Universal Vectorizer is a production-grade, streaming ingestion and semantic search platform for teams that need to index *any* enterprise data—PDFs, text, massive CSV/Excel dumps, terabyte-scale JSON, audio (Whisper), and web pages—without losing fidelity. It normalizes and chunks content in a memory-safe way, generates embeddings with OpenAI or local HuggingFace models, and stores vectors in Chroma, Pinecone, or Qdrant for low-latency retrieval. Data engineers, ML platform teams, knowledge-management squads, and LLM application builders can plug it into existing stacks to create scalable RAG foundations.
+
+### SEO quick facts
+- Keywords: **LLM ingestion**, **RAG pipeline**, **vector database**, **OpenAI embeddings**, **HuggingFace Instructor**, **Chroma**, **Pinecone**, **Qdrant**, **streaming PDF OCR**, **Whisper audio transcription**, **hybrid chunker**, **semantic search UI**, **large-file ingestion**, **universal vectorizer**.
+- Industry use cases: enterprise search, knowledge bases, contract intelligence, customer-support copilots, analytics over CSV/JSON logs, compliance archives, media & audio archives.
+- Why it ranks: real code, GPU-ready batch embeddings, async FastAPI backend, modern React front-end, and exhaustive documentation covering load tests, production hardening, and future work.
+
+### Search-trigger cheat sheet
+- 1-word: `vectorizer`, `rag`, `embeddings`, `ocr`, `whisper`, `pinecone`, `chroma`, `qdrant`, `ingestion`, `chunker`.
+- 2-word combos users search for: `rag pipeline`, `llm ingestion`, `vector db`, `pdf ocr`, `audio whisper`, `json flatten`, `openai embeddings`, `hf instructor`, `semantic search`, `enterprise search`, `contract ai`, `support copilot`, `large csv`.
+- Long-tail phrases covered in this README so engines index them: “50GB pdf ingestion”, “streaming llm pipeline”, “hybrid semantic chunker example”, “async openai embeddings retry”, “fastapi rag backend sample”, “react semantic search dashboard”.
+
+### Copy-paste tags / hashtags
+`#universal-vectorizer #RAG #LLM #VectorDB #OpenAI #HuggingFace #Chroma #Pinecone #Qdrant #OCR #Whisper #PDF #JSON #CSV #EnterpriseSearch #AIpipeline`
+
+### TL;DR for link previews
+“Universal Vectorizer turns chaotic PDFs / CSV / JSON / audio into high-quality embeddings using streaming extractors, hybrid chunking, OpenAI + HF batching, and pluggable vector DBs, shipping with FastAPI APIs and a React dashboard for ingestion telemetry & semantic search.”
 
 ## Pipeline at a glance
 ```mermaid
