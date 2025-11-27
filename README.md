@@ -1,185 +1,271 @@
-# Universal Vectorizer
+# <img src="https://raw.githubusercontent.com/user-attachments/assets/logo_placeholder.png" width="48" /> Universal Vectorizer
+**Enterprise-grade RAG ingestion engine** for large PDFs, CSVs, JSON, OCR, audio, and unstructured data — built for modern LLM pipelines, vector databases, and high-throughput semantic search applications.
 
-> Enterprise-grade **RAG ingestion engine** for **LLM pipelines**, **vector databases**, **observability-rich streaming ETL**, and **multimodal document intelligence**. Optimized for people searching GitHub or Google for “universal vectorizer”, “LLM data ingestion”, “RAG pipeline”, “OpenAI embeddings streaming”, “HuggingFace vector store”, “Pinecone + Chroma + Qdrant”, or “50GB PDF OCR pipeline”.
+**Created by _Vibhanshu Kumar Shubham_ — DevOps & AI Engineer**
 
-## What this system is (and who it serves)
-Universal Vectorizer is a production-grade, streaming ingestion and semantic search platform for teams that need to index *any* enterprise data—PDFs, text, massive CSV/Excel dumps, terabyte-scale JSON, audio (Whisper), and web pages—without losing fidelity. It normalizes and chunks content in a memory-safe way, generates embeddings with OpenAI or local HuggingFace models, and stores vectors in Chroma, Pinecone, or Qdrant for low-latency retrieval. Data engineers, ML platform teams, knowledge-management squads, and LLM application builders can plug it into existing stacks to create scalable RAG foundations.
+---
 
-### SEO quick facts
-- Keywords: **LLM ingestion**, **RAG pipeline**, **vector database**, **OpenAI embeddings**, **HuggingFace Instructor**, **Chroma**, **Pinecone**, **Qdrant**, **streaming PDF OCR**, **Whisper audio transcription**, **hybrid chunker**, **semantic search UI**, **large-file ingestion**, **universal vectorizer**.
-- Industry use cases: enterprise search, knowledge bases, contract intelligence, customer-support copilots, analytics over CSV/JSON logs, compliance archives, media & audio archives.
-- Why it ranks: real code, GPU-ready batch embeddings, async FastAPI backend, modern React front-end, and exhaustive documentation covering load tests, production hardening, and future work.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/user-attachments/assets/banner_placeholder.png" width="100%" />
+</p>
 
-### Search-trigger cheat sheet
-- 1-word: `vectorizer`, `rag`, `embeddings`, `ocr`, `whisper`, `pinecone`, `chroma`, `qdrant`, `ingestion`, `chunker`.
-- 2-word combos users search for: `rag pipeline`, `llm ingestion`, `vector db`, `pdf ocr`, `audio whisper`, `json flatten`, `openai embeddings`, `hf instructor`, `semantic search`, `enterprise search`, `contract ai`, `support copilot`, `large csv`.
-- Long-tail phrases covered in this README so engines index them: “50GB pdf ingestion”, “streaming llm pipeline”, “hybrid semantic chunker example”, “async openai embeddings retry”, “fastapi rag backend sample”, “react semantic search dashboard”.
+<p align="center">
+  <img alt="GitHub Stars" src="https://img.shields.io/github/stars/Theubaa/universal-vectorizer?style=for-the-badge">
+  <img alt="Issues" src="https://img.shields.io/github/issues/Theubaa/universal-vectorizer?style=for-the-badge">
+  <img alt="Forks" src="https://img.shields.io/github/forks/Theubaa/universal-vectorizer?style=for-the-badge">
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge">
+</p>
 
-### Copy-paste tags / hashtags
-`#universal-vectorizer #RAG #LLM #VectorDB #OpenAI #HuggingFace #Chroma #Pinecone #Qdrant #OCR #Whisper #PDF #JSON #CSV #EnterpriseSearch #AIpipeline`
+---
 
-### TL;DR for link previews
-“Universal Vectorizer turns chaotic PDFs / CSV / JSON / audio into high-quality embeddings using streaming extractors, hybrid chunking, OpenAI + HF batching, and pluggable vector DBs, shipping with FastAPI APIs and a React dashboard for ingestion telemetry & semantic search.”
+# 🚀 Overview
 
-## Pipeline at a glance
+**Universal Vectorizer** is a **production-grade ingestion + embedding engine** that turns chaotic enterprise files into clean, searchable vector embeddings.
+
+It handles:
+
+- **PDFs (single or multi-gigabyte)**
+- **CSV / Excel dumps**
+- **Massive JSON / NDJSON logs**
+- **Images → OCR text**
+- **Audio → Whisper transcription**
+- **Web URLs**
+- **Binary formats (custom handlers)**
+
+Built for users searching:
+`universal vectorizer, rag pipeline, llm ingestion, openai embeddings streaming, enterprise vector search, multimodal ingestion, pdf ocr, qdrant, pinecone, chroma`.
+
+---
+
+# ⚡ Pipeline at a Glance
+
 ```mermaid
 flowchart LR
     A[Client Upload / URL] --> B[Streaming Ingestion Service]
-    B --> C[Preprocessor (OCR/Parsing)]
+    B --> C[Preprocessor (OCR / Parsing)]
     C --> D[Streaming Hybrid Chunker]
-    D --> E[Batched Async Embeddings (OpenAI + HF fallback)]
-    E --> F[Vector DB Abstraction (Chroma / Pinecone / Qdrant)]
-    F --> G[Semantic Search API + UI]
-```
+    D --> E[Batched Async Embeddings (OpenAI + HF Fallback)]
+    E --> F[Vector DB Layer (Chroma / Pinecone / Qdrant)]
+    F --> G[Semantic Search API & Dashboard]
 
-## Step-by-step story
-1. **Upload anything** – Users drag in multi-gig files or paste URLs. Uploads are streamed to disk using bounded buffers.
-<img width="1919" height="939" alt="image" src="https://github.com/user-attachments/assets/547a1e26-c7ac-47a9-97e6-63c3013727ca" />
-<img width="1919" height="940" alt="image" src="https://github.com/user-attachments/assets/62b6aa61-9924-4a96-b2b5-9654e39ef0fd" />
-<img width="1919" height="939" alt="image" src="https://github.com/user-attachments/assets/a8358eea-ea6b-435d-8734-1de249e032c4" />
 
-2. **Streaming extraction** – Modality-specific handlers (PDF pages, CSV rows, JSON via `ijson`, OCR, Whisper, BeautifulSoup) yield text blocks without loading the entire document into memory.
+🧩 Step-by-Step System Story (Screenshots Included)
+1️⃣ Upload Anything (PDF, CSV, JSON, Audio, Images)
 
-3. **Cleaning & normalization** – A memory-safe cleaner removes noise, dedupes whitespace, and feeds a streaming chunker.
-4. **Smart chunking** – Semantic units are combined with fixed windows to create overlap-aware chunks on the fly.
-5. **Async embedding batches** – Chunk batches are sent to OpenAI via the async SDK with retry/backoff; failures automatically fall back to the HuggingFace Instructor/all-MiniLM stack (GPU-capable).
-6. **Vector persistence** – Embeddings are written in batches to the configured vector DB with durability, retry logic, and backpressure via semaphores/checkpoints.
-7. **Search & analytics** – The FastAPI layer exposes upload/ingest/search endpoints plus job-status feeds (REST + WebSocket). The React dashboard visualizes progress, logs, filters, and paginated search results with metadata modals.
+Multi-gigabyte files stream safely with backpressure.
 
-## Repository layout
-```
+<img width="100%" src="https://github.com/user-attachments/assets/547a1e26-c7ac-47a9-97e6-63c3013727ca" /> <img width="100%" src="https://github.com/user-attachments/assets/62b6aa61-9924-4a96-b2b5-9654e39ef0fd" /> <img width="100%" src="https://github.com/user-attachments/assets/a8358eea-ea6b-435d-8734-1de249e032c4" />
+2️⃣ Streaming Extraction
+
+PDF → page iterator
+
+CSV → row iterator
+
+JSON → incremental ijson parser
+
+Audio → Whisper chunks
+
+OCR → Tesseract
+
+🧠 Zero memory blowups — never loads entire file at once
+
+3️⃣ Cleaning & Normalization
+
+Noise removal, whitespace normalization, semantic-safe text blocks.
+
+4️⃣ Smart Streaming Chunker
+
+Hybrid window + semantic chunking.
+Optimized for LLM context fidelity.
+
+5️⃣ Async Embedding Engine
+
+OpenAI async batching
+
+HuggingFace Instructor-large, MiniLM fallback
+
+Retry/backoff
+
+Rate-limit control
+
+GPU-ready
+
+6️⃣ Vector DB Persistence
+
+Supported providers:
+
+🟦 Chroma
+
+🟧 Pinecone
+
+🟥 Qdrant
+
+Batching + idempotent inserts + metadata guarantees.
+
+7️⃣ Semantic Search UI
+
+FastAPI backend + React dashboard:
+
+Job progress
+
+Real-time WS logs
+
+Chunk stats
+
+Vector DB metrics
+
+Search with snippets
+
+Metadata viewer
+
+📂 Repository Structure
 backend/
   app/
-    main.py               # FastAPI entrypoint
-    config.py             # Tightly typed settings + .env loading
-    logger.py             # Rotating structured logs
+    main.py
+    config.py
+    logger.py
     core/
-      checkpoint.py       # Resume-able ingestion checkpoints
-      progress.py         # Job manager + websocket broadcaster
-    routes/               # Async REST + websocket endpoints
-    services/             # Upload, ingestion orchestration, search
+      progress.py
+      checkpoint.py
+    routes/
+    services/
     pipelines/
-      ingestion_pipeline.py  # Streaming pipeline w/ batching + retries
+      ingestion_pipeline.py
     utils/
-      ingestion/          # Streaming handlers (pdf/text/json/url/etc.)
-      preprocess/         # Cleaners
-      chunking/           # Streaming hybrid chunker
-      embeddings/         # Async OpenAI + HF backends
-      vectordb/           # Chroma, Pinecone, Qdrant drivers
-      json_flattener.py   # Infinite-depth flattener (still available)
-      file_utils.py       # Memory-safe upload helpers
+      ingestion/
+      preprocess/
+      chunking/
+      embeddings/
+      vectordb/
+      json_flattener.py
+      file_utils.py
+
 frontend/
   src/
-    pages/                # Upload, Status, Search
-    components/           # Dropzone, job table, metadata modal, etc.
-    services/api.js       # REST + websocket client helpers
-    styles/global.css     # Modern responsive UI
-```
+    pages/
+    components/
+    services/api.js
+    styles/global.css
 
-## Backend setup
-```bash
+Backend Setup
 cd backend
 python -m venv .venv
-.venv\Scripts\activate        # Windows
+.venv/Scripts/activate
 pip install -r requirements.txt
 copy NUL .env
-notepad .env                  # add keys (see table below)
+notepad .env
 uvicorn app.main:app --reload
-```
 
-### Key environment variables
-| Variable | Purpose |
-| --- | --- |
-| `OPENAI_API_KEY` | Required for OpenAI embeddings |
-| `EMBEDDING_BACKEND` | `openai` (default) or `huggingface` |
-| `HF_MODEL_NAME` | HF model (Instructor-large, all-MiniLM, etc.) |
-| `VECTORDB_PROVIDER` | `chroma`, `pinecone`, or `qdrant` |
-| `PINECONE_API_KEY`, `PINECONE_INDEX`, `PINECONE_ENVIRONMENT` | Needed if Pinecone is selected |
-| `QDRANT_URL`, `QDRANT_API_KEY` | Needed if Qdrant is selected |
-| `DEFAULT_CHUNK_SIZE`, `DEFAULT_CHUNK_OVERLAP` | Hybrid chunking controls |
-| `CHUNK_BATCH_SIZE`, `EMBEDDING_BATCH_SIZE` | Flow-control knobs |
-| `INGESTION_CONCURRENCY` | Max concurrent ingestion jobs |
-| `ALLOWED_ORIGINS` | CORS settings for the UI |
+| Key                  | Purpose                      |
+| -------------------- | ---------------------------- |
+| OPENAI_API_KEY       | Needed for OpenAI embeddings |
+| EMBEDDING_BACKEND    | openai / huggingface         |
+| HF_MODEL_NAME        | Instructor-xl / MiniLM       |
+| VECTORDB_PROVIDER    | chroma / pinecone / qdrant   |
+| QDRANT_URL           | Vector DB endpoint           |
+| PINECONE_API_KEY     | Pinecone                     |
+| CHUNK_BATCH_SIZE     | Controls throughput          |
+| EMBEDDING_BATCH_SIZE | OpenAI or HF batching        |
 
-### Extending ingestion
-```python
-from app.utils.ingestion.base import IngestionHandler, StreamedDocument
-from app.utils.ingestion.registry import registry
 
-class CustomBinaryHandler(IngestionHandler):
-    supported_types = [".bin"]
-
-    def stream(self, source: Path) -> StreamedDocument:
-        def iter_bytes():
-            with source.open("rb") as fh:
-                while chunk := fh.read(65536):
-                    yield chunk.decode("utf-8", errors="ignore")
-        return StreamedDocument(chunks=iter_bytes(), metadata={"source": str(source), "type": "custom"})
-
-registry.register(CustomBinaryHandler.supported_types, CustomBinaryHandler)
-```
-
-## Frontend setup
-```bash
+🎨 Frontend Setup
 cd frontend
 npm install
 npm run dev
-```
-Optional `.env`:
-```
+
+
+Optional .env:
+
 VITE_API_URL=http://localhost:8000
 VITE_WS_URL=ws://localhost:8000
-```
 
-## API surface
-- `GET /health` – readiness probe.
-- `POST /upload` – streaming multipart upload → `{ file_path, filename }`.
-- `POST /ingest` – body `{ file_path?, url?, metadata? }` → `{ job_id }`.
-- `GET /ingest/jobs` – list of recent job snapshots.
-- `GET /ingest/{job_id}/status` – single job snapshot.
-- `WS /ws/ingest/{job_id}` – realtime job telemetry (optional).
-- `POST /search` – `{ query, top_k, offset, filters? }` → matches with metadata + snippets.
+🔌 API Surface
+Upload & Ingest
 
-## Production checklist
-- [ ] **Logging** – Ship `storage/logs/app.log` to ELK/Grafana; add trace IDs per job.
-- [ ] **Monitoring** – Scrape FastAPI metrics, track chunk throughput, vector DB latency.
-- [ ] **Vector DB persistence** – Ensure Chroma path sits on durable disk / mount Pinecone/Qdrant with backups.
-- [ ] **Concurrency tests** – Increase `INGESTION_CONCURRENCY` gradually; watch semaphore contention.
-- [ ] **Memory-pressure tests** – Feed 50GB text/CSV, verify RSS stays flat thanks to streaming handlers.
-- [ ] **OCR + Whisper dependencies** – Install Tesseract binaries + GPU/CUDA drivers where needed.
-- [ ] **CPU/GPU sizing** – OpenAI offloads work, but HuggingFace fallback benefits from GPU acceleration.
-- [ ] **Horizontal scaling** – Run multiple workers behind a queue (job tracker is process-safe).
-- [ ] **Error handling & retries** – Embedding retries/backoff configured; add alerting on repeated fallback usage.
+POST /upload
 
-## Load testing & stress testing guide
-1. **10GB shakedown** – Use large CSV/JSON; confirm ingestion completes without spikes, checkpoints cleaned up.
-2. **20GB PDF batch** – Mixed PDFs to benchmark OCR throughput; monitor Whisper/Tesseract CPU.
-3. **50GB–100GB CSV** – Stream via CLI (`split` + upload) or direct drag/drop; verify chunk counts & checkpoints.
-4. **Simulate load** – Fire multiple `/ingest` jobs concurrently (e.g., k6, Locust) to validate semaphore limits and job tracking.
-5. **Embedding correctness** – Spot-check by querying known strings; ensure embeddings from primary & fallback models align (cosine similarity thresholds).
-6. **Vector DB audit** – Query `n` results and ensure metadata/source traces match original input; test batch deletes if needed.
+POST /ingest
 
-## Limitations & future work
-- GPU acceleration for HuggingFace embeddings is supported but not auto-configured—deploy on GPU nodes for best throughput.
-- OCR + PDF extraction currently operate page-by-page; for extreme documents, integrate genuine streaming OCR (e.g., pdfminer.six incremental parsing).
-- Chunking + checkpoints are single-node; multi-node ingestion would require shared checkpoint stores (Redis/S3) and distributed locks.
-- Audio/Whisper ingestion still transcribes whole files before chunking (Whisper API limitation).
-- Authentication/multi-tenant RBAC is not included—front the API with your IdP/gateway.
+Job Status
 
-## Search result contract
-```json
+GET /ingest/jobs
+
+GET /ingest/{id}/status
+
+WS /ws/ingest/{id}
+
+Search
+
+POST /search
+
+🧪 Load Testing Guide
+
+10GB CSV stress test
+
+20GB PDF OCR test
+
+50GB–100GB ingestion stress
+
+Concurrency via Locust/k6
+
+Embedding cosine validation
+
+Vector DB cleanup & audit
+
+🛡 Production Checklist
+
+Structured logging
+
+Prometheus/FastAPI metrics
+
+Durable vector DB storage
+
+GPU for HuggingFace
+
+Backpressure controls
+
+Error retries + alerting
+
+Horizontal scaling via queue workers
+
+📌 Search Result Contract
 {
   "id": "storage/uploads/123-chunk-42",
   "score": 0.12,
-  "text": "chunk snippet ...",
+  "text": "chunk snippet...",
   "metadata": {
     "source": "storage/uploads/123.pdf",
     "type": "pdf",
     "chunk_index": 42,
-    "embedding_model": "text-embedding-3-large",
-    "tag": "contracts"
+    "embedding_model": "text-embedding-3-large"
   }
 }
-```
 
-Use the Upload/Status/Search pages (or REST/WS APIs) end-to-end to verify ingestion, progress tracking, and retrieval quality. Stay within the production checklist to harden deployments for enterprise-grade loads.
+🧱 Extending the Ingestion Engine
+from app.utils.ingestion.base import IngestionHandler, StreamedDocument
+
+class CustomBinaryHandler(IngestionHandler):
+    supported_types = [".bin"]
+
+    def stream(self, source):
+        def iter_chunks():
+            with open(source, "rb") as f:
+                while chunk := f.read(65536):
+                    yield chunk.decode("utf-8", errors="ignore")
+        return StreamedDocument(chunks=iter_chunks(), metadata={"type": "binary"})
+
+🤝 Contributing
+
+Contributions welcome!
+Open issues, submit PRs, suggest new ingestion handlers or vector DB providers.
+
+📄 License
+
+MIT License — free for commercial and enterprise use.
+
+© 2025 — Created by Vibhanshu Kumar Shubham, DevOps & AI Engineer.
+
+❤️ Final Note
+
+This project was created to help teams build scalable, reliable, enterprise-grade RAG pipelines capable of ingesting anything from simple PDFs to massive 50GB datasets.
+
