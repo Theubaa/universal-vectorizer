@@ -34,7 +34,12 @@ flowchart LR
 
 ## Step-by-step story
 1. **Upload anything** – Users drag in multi-gig files or paste URLs. Uploads are streamed to disk using bounded buffers.
+<img width="1919" height="939" alt="image" src="https://github.com/user-attachments/assets/547a1e26-c7ac-47a9-97e6-63c3013727ca" />
+<img width="1919" height="940" alt="image" src="https://github.com/user-attachments/assets/62b6aa61-9924-4a96-b2b5-9654e39ef0fd" />
+<img width="1919" height="939" alt="image" src="https://github.com/user-attachments/assets/a8358eea-ea6b-435d-8734-1de249e032c4" />
+
 2. **Streaming extraction** – Modality-specific handlers (PDF pages, CSV rows, JSON via `ijson`, OCR, Whisper, BeautifulSoup) yield text blocks without loading the entire document into memory.
+
 3. **Cleaning & normalization** – A memory-safe cleaner removes noise, dedupes whitespace, and feeds a streaming chunker.
 4. **Smart chunking** – Semantic units are combined with fixed windows to create overlap-aware chunks on the fly.
 5. **Async embedding batches** – Chunk batches are sent to OpenAI via the async SDK with retry/backoff; failures automatically fall back to the HuggingFace Instructor/all-MiniLM stack (GPU-capable).
